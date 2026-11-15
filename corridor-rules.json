@@ -1,0 +1,42 @@
+{
+ "code": "Ontario Building Code 2024, Article 3.3.1.4 (public corridors) and 3.4.4.1 (exit enclosures)",
+ "finding": "Part 3 does not rate corridors group-by-group. Article 3.3.1.4 sets one rule for all occupancies, with sprinkler carve-outs in Sentences (3) and (4).",
+ "corridor_rules": [
+  {
+   "condition": "Storey not sprinklered (any occupancy)",
+   "requirement": "Public corridor separated from the remainder of the storey by a fire separation with a fire-resistance rating of not less than 45 min.",
+   "article": "3.3.1.4.(1), (2)"
+  },
+  {
+   "condition": "Storey sprinklered; corridor does NOT serve a care, care and treatment, detention or residential occupancy (serves Groups A, D, E, F)",
+   "requirement": "Fire separation required between the corridor and the remainder of the storey, but no fire-resistance rating is required for that separation.",
+   "article": "3.3.1.4.(3)"
+  },
+  {
+   "condition": "Storey sprinklered; corridor serves a care, care and treatment, detention or residential occupancy (Groups B-1, B-2, B-3, C)",
+   "requirement": "45 min fire-resistance rating still required - the Sentence (3) relief does not apply to these occupancies.",
+   "article": "3.3.1.4.(2), (3)"
+  },
+  {
+   "condition": "Sprinklered floor area; corridor vs remainder of storey",
+   "requirement": "No fire separation required at all, provided the travel distance from any part of the floor area to an exit is not more than 45 m (exceptions: 3.3.3.5.(9) and 3.3.4.2.(1)).",
+   "article": "3.3.1.4.(4)(a)"
+  },
+  {
+   "condition": "Sprinklered floor area; corridor vs a room or suite",
+   "requirement": "No fire separation required, provided the corridor complies with 3.3.1.9.(6) and 3.4.2.5.(1)(d).",
+   "article": "3.3.1.4.(4)(b)"
+  },
+  {
+   "condition": "Sprinklered floor area; corridor vs washroom space (fixtures per 3.7.4)",
+   "requirement": "No separation between the corridor and the washroom space, but the washroom space and corridor together must be separated from the remainder of the storey at the rating required for the corridor.",
+   "article": "3.3.1.4.(4)(c)"
+  },
+  {
+   "condition": "Using the (3)/(4) relief where the corridor serves Group E or F Div. 1 or 2",
+   "requirement": "The sprinkler system must be electrically supervised (3.2.4.10.(3)) and transmit a signal to the fire department (3.2.4.8.(4)).",
+   "article": "3.3.1.4.(5)"
+  }
+ ],
+ "exit_enclosure_rule": "3.4.4.1: every exit is separated from the remainder of the building by a fire separation with an FRR not less than that required by Subsection 3.2.2 for the floor assembly above the storey (or below, if no floor above), but not less than 45 min and need not exceed 2 h."
+}

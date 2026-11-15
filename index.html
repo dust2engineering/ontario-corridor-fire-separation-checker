@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontario Corridor Fire Separation Checker | Dust 2 Engineering Inc.</title>
+<style>
+:root{color-scheme:dark}
+body{background:#0e1116;color:#e6e9ee;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;padding:24px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:1.55rem;line-height:1.25;margin:.2em 0 .1em}
+h2{font-size:1.15rem;margin-top:1.6em;color:#ffd479}
+.sub{color:#9fb0c3;margin:.2em 0 1.2em}
+.card{background:#161b22;border:1px solid #2b333f;border-radius:12px;padding:18px;margin:14px 0}
+label{display:block;margin:.7em 0 .25em;color:#c8d3e0;font-size:.95rem}
+input,select,textarea{width:100%;box-sizing:border-box;background:#0e1116;color:#e6e9ee;border:1px solid #39424f;border-radius:8px;padding:9px;font-size:1rem}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.row{grid-template-columns:1fr}}
+button{background:#f0a832;color:#14100a;border:0;border-radius:8px;padding:11px 18px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:14px}
+pre{background:#0a0d11;border:1px solid #2b333f;border-radius:10px;padding:14px;white-space:pre-wrap;word-break:break-word;font-size:.92rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid #2b333f;padding:6px 8px;text-align:left}
+th{background:#1b212b}
+.small{color:#9fb0c3;font-size:.88rem}
+a{color:#7cc4ff}
+.pass{color:#7ee2a0}.fail{color:#ff9c9c}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Ontario Corridor Fire Separation Checker</h1>
+<p class="sub">OBC 2024 Article 3.3.1.4 — the corridor rule, its sprinkler reliefs, and the 3.4.4.1 exit-enclosure rating.</p>
+<div class="card">
+<label>Is the storey sprinklered?</label>
+<select id="spr"><option value="no" selected>No</option><option value="yes">Yes</option></select>
+<label>What does the corridor serve?</label>
+<select id="srv"><option value="other" selected>Assembly / business / mercantile / industrial (A, D, E, F)</option><option value="protected">Care, care &amp; treatment, detention or residential (B-1, B-2, B-3, C)</option></select>
+<label>Longest travel distance on the floor area to an exit (m) — for the Sentence (4)(a) relief</label>
+<input id="td" type="number" value="30" min="0" step="0.5">
+<label><input id="suite" type="checkbox" style="width:auto"> Also check the corridor-vs-suite relief (Sentence (4)(b))</label>
+<button onclick="calc()">Check corridor requirement</button>
+<pre id="out">Answer the questions and click Check.</pre></div>
+<div class="card"><h2>Exit enclosures (3.4.4.1)</h2>
+<label>FRR required for the floor assembly above the storey (minutes)</label>
+<input id="fr" type="number" value="60" min="0" step="15">
+<button onclick="exitCalc()">Exit rating</button>
+<pre id="out2">The exit separation takes the floor-assembly rating required by 3.2.2, but not less than 45 min and not more than 2 h.</pre></div>
+<div class="card"><h2>Why this is not a big table</h2>
+<p class="small">Designers often expect a corridor-rating matrix by occupancy group. Part 3 does not work that way: Article 3.3.1.4 sets a single 45-minute default for public corridors, then relaxes it for sprinklered storeys — except where the corridor serves care, care and treatment, detention or residential occupancies. The full rule set, including the Sentence (4) no-separation reliefs and the electrically-supervised-sprinkler condition for Group E and F Div. 1/2 corridors, is in the repository data file.</p></div>
+<p class="small">Free tool by <b>Dust 2 Engineering Inc.</b>, Mississauga, Ontario — building permit
+drawings for restaurants and small commercial projects across the GTA, stamped by an Ontario P.Eng.
+Flat rate $3,500–$5,000. Questions or a project to discuss: open an issue in this repository.</p>
+</div>
+<script>
+function calc(){
+ const spr=document.getElementById('spr').value==='yes';
+ const prot=document.getElementById('srv').value==='protected';
+ const td=parseFloat(document.getElementById('td').value);
+ const suite=document.getElementById('suite').checked;
+ let out='';
+ if(!spr){ out='Corridor: fire separation with FRR of not less than 45 min from the remainder of the storey. [3.3.1.4.(1), (2)]'; }
+ else if(prot){ out='Corridor: fire separation with FRR of not less than 45 min. The Sentence (3) no-rating relief does not apply to care / care and treatment / detention / residential occupancies. [3.3.1.4.(2), (3)]'; }
+ else { out='Corridor: fire separation required, but NO fire-resistance rating is required for that separation. [3.3.1.4.(3)]'; }
+ if(spr && td<=45) out+='\nAlso: sprinklered floor area with travel distance <= 45 m - no corridor separation from the remainder of the storey is required at all. [3.3.1.4.(4)(a); exceptions 3.3.3.5.(9), 3.3.4.2.(1)]';
+ if(spr && suite) out+='\nCorridor vs a room or suite: no separation required if the corridor complies with 3.3.1.9.(6) and 3.4.2.5.(1)(d). [3.3.1.4.(4)(b)]';
+ document.getElementById('out').textContent=out;
+}
+function exitCalc(){
+ const fr=parseFloat(document.getElementById('fr').value);
+ const r=Math.min(Math.max(fr,45),120);
+ document.getElementById('out2').textContent='Exit enclosure fire separation: '+r+' min FRR (floor assembly '+fr+' min, clamped to the 45 min minimum / 2 h maximum of 3.4.4.1).';
+}
+</script>
+</body>
+</html>

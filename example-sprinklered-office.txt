@@ -1,0 +1,6 @@
+Sprinklered office floor, corridor serving Group D, travel distance 30 m:
+
+$ python3 corridor_checker.py --sprinklered yes --serves other --travel-distance 30
+
+Corridor: fire separation required, but NO fire-resistance rating required. [3.3.1.4.(3)]
+Also: sprinklered floor area with travel distance <= 45 m - no corridor separation from the remainder of the storey is required at all. [3.3.1.4.(4)(a); exceptions 3.3.3.5.(9), 3.3.4.2.(1)]

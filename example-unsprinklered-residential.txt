@@ -1,0 +1,11 @@
+Unsprinklered residential storey:
+
+$ python3 corridor_checker.py --sprinklered no --serves protected
+
+Corridor: fire separation with FRR >= 45 min from the remainder of the storey. [3.3.1.4.(1), (2)]
+
+Exit check for the same building, floor assembly rated 45 min:
+
+$ python3 corridor_checker.py --exit --floor-rating 45
+
+Exit enclosure fire separation: 45 min FRR (floor assembly 45 min, clamped to the 45 min floor / 2 h cap of 3.4.4.1).
